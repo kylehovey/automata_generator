@@ -1,27 +1,17 @@
 #include <iostream>
-#include <iomanip>
-#include <fstream>
 #include <vector>
 
+#include "image_writer/image_writer.cpp"
+
 int main() {
-  const auto save_filename = "tmp/output.ppm";
-  std::ofstream out(save_filename);
-  const auto width = 64;
-  const auto height = 64;
+  const std::string save_file = "tmp/output.ppm";
+  const int width = 64;
+  const int height = 64;
 
-	out << "P2\n" << width  << " ";
-	out << height << std::endl << 255 << std::endl << std::right;
+  ImageWriter::Descriptor descriptor(save_file, width, height);
 
-	for(int y=0; y<height; y++) {
-		for(int x=0; x<width; x++) {
-      out << std::setw(3) << (x + y);
-      out << " ";
-    }
-
-		out << "\n";
-	}
-
-	out.close();
+  descriptor.write();
+  descriptor.close();
 
   std::cout << "File Written." << std::endl;
 
