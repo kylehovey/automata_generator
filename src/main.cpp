@@ -4,7 +4,7 @@
 #include <vector>
 
 int main() {
-  const auto save_filename = "output.ppm";
+  const auto save_filename = "tmp/output.ppm";
   std::ofstream out(save_filename);
   const auto width = 64;
   const auto height = 64;
