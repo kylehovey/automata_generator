@@ -7,9 +7,9 @@ namespace ImageWriter {
     const int& height
   ) : width(width), height(height) {
     this->out = std::ofstream(file_path);
-    this->out << "P2\n" << width  << " ";
+    this->out << "P1\n" << width  << " ";
     this->out << height << std::endl;
-    this->out << 255 << std::endl << std::right;
+    this->out << 1 << std::endl << std::right;
   }
 
   /**
@@ -18,7 +18,7 @@ namespace ImageWriter {
   void Descriptor::write() {
     for(int y=0; y<height; y++) {
       for(int x=0; x<width; x++) {
-        this->out << std::setw(3) << (x + y);
+        this->out << std::setw(3) << ((x + y) % 2);
         this->out << " ";
       }
 
