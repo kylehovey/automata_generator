@@ -3,8 +3,11 @@
 
 #include <iomanip>
 #include <fstream>
+#include <functional>
 
 namespace ImageWriter {
+  using PixelMap = std::function<int(const int&, const int&)>;
+
   class Descriptor {
     public:
       Descriptor(
@@ -13,7 +16,7 @@ namespace ImageWriter {
         const int& height
       );
 
-      void write();
+      void write(const PixelMap&);
       void close();
     private:
       std::ofstream out;

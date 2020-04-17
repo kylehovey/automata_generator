@@ -15,10 +15,10 @@ namespace ImageWriter {
   /**
    * TODO: Take a 2D array here
    */
-  void Descriptor::write() {
+  void Descriptor::write(const PixelMap& mapper) {
     for(int y=0; y<height; y++) {
       for(int x=0; x<width; x++) {
-        this->out << ((x + y) % 2);
+        this->out << mapper(x, y);
         this->out << " ";
       }
     }
