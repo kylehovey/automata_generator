@@ -38,3 +38,8 @@ tmp/*
 
 # Compiled Program
 run
+
+## OS X
+
+# Ree.
+.DS_Store
