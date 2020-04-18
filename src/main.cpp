@@ -21,8 +21,8 @@ int main() {
   /**
    * Image data creation
    */
-  ImageWriter::PixelMap mapper = [&](const int& x, const int& y) {
-    return board.stateOf(x, y);
+  ImageWriter::PixelMap mapper = [=](const int& x, const int& y) {
+    return board.state_of(x, y);
   };
 
   /**
