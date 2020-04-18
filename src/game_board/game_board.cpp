@@ -71,9 +71,9 @@ namespace GameBoard {
   }
 
   void GameBoard::print() const {
-    for (const auto& row : this->board) {
-      for (const auto& cell : row) {
-        std::cout << cell.current;
+    for (const auto& col : this->board) {
+      for (const auto& cell : col) {
+        std::cout << cell.current << ",";
       }
 
       std::cout << std::endl;
