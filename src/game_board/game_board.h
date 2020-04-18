@@ -26,6 +26,9 @@ namespace GameBoard {
       void advance_time();
       void mutate(const LocMutation&);
       void mutate(const Mutation&);
+
+      int width;
+      int height;
       Board board;
   };
 }

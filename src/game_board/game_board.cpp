@@ -7,13 +7,13 @@ namespace GameBoard {
   GameBoard::GameBoard(
     const int& width,
     const int& height
-  ) : board(Board(height, std::vector<Cell>(width))) { }
+  ) : width(width), height(height), board(Board(width, std::vector<Cell>(height))) { }
 
   void GameBoard::mutate(const LocMutation& mutation) {
-    for (unsigned int y = 0; y < this->board.size(); ++y) {
-      auto row = this->board[y];
-      for (unsigned int x = 0; x < row.size(); ++x) {
-        mutation(x, y, row[x]);
+    for (int x = 0; x < width; ++x) {
+      auto col = this->board[x];
+      for (int y = 0; y < height; ++y) {
+        mutation(x, y, col[y]);
       }
     }
   }
@@ -43,7 +43,7 @@ namespace GameBoard {
   }
 
   bool GameBoard::state_of(const int& x, const int& y) const {
-    return this->board[y][x].current;
+    return this->board[x][y].current;
   }
 
   void GameBoard::print() const {
