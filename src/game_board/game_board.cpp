@@ -29,6 +29,7 @@ namespace GameBoard {
 
     for (int _u = x_start; _u <= x_end; ++_u) {
       for (int _v = y_start; _v <= y_end; ++_v) {
+        // Embed grid on a torus
         const int u = _u % width;
         const int v = _v % height;
 
