@@ -22,7 +22,9 @@ namespace GameBoard {
       void randomize(const int&);
       bool state_of(const int&, const int&) const;
       void print() const;
+      void print_neighbors() const;
     private:
+      int neighbors_of(const int&, const int&) const;
       void advance_time();
       void mutate(const LocMutation&);
       void mutate(const Mutation&);
