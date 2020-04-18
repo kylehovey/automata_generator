@@ -9,7 +9,6 @@ namespace ImageWriter {
     this->out = std::ofstream(file_path);
     this->out << "P1\n" << width  << " ";
     this->out << height << std::endl;
-    this->out << 1 << std::endl;
   }
 
   /**
