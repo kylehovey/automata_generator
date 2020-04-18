@@ -20,7 +20,7 @@ namespace GameBoard {
       GameBoard(const int&, const int&);
 
       void randomize(const int&);
-      bool stateOf(const int&, const int&) const;
+      bool state_of(const int&, const int&) const;
       void print() const;
     private:
       void advance_time();

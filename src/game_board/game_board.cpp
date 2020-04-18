@@ -42,7 +42,7 @@ namespace GameBoard {
     this->advance_time();
   }
 
-  bool GameBoard::stateOf(const int& x, const int& y) const {
+  bool GameBoard::state_of(const int& x, const int& y) const {
     return this->board[y][x].current;
   }
 
