@@ -36,6 +36,9 @@ CTestTestfile.cmake
 # Temporary Dir
 tmp/*
 
+# Output data
+out.csv
+
 # Compiled Program
 run
 
