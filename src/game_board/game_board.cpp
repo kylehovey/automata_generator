@@ -9,10 +9,18 @@ namespace GameBoard {
     const int& height
   ) : width(width), height(height), board(Board(width, std::vector<Cell>(height))) { }
 
+  void GameBoard::step_with_rule(const Rule& rule) {
+    this->mutate([&](const int& x, const int& y, Cell& cell) {
+      cell.next = rule(this->neighbors_of(x, y), cell.current);
+    });
+
+    this->advance_time();
+  }
+
   void GameBoard::mutate(const LocMutation& mutation) {
-    for (int x = 0; x < width; ++x) {
-      auto col = this->board[x];
-      for (int y = 0; y < height; ++y) {
+    for (int x = 0; x < this->width; ++x) {
+      auto& col = this->board[x];
+      for (int y = 0; y < this->height; ++y) {
         mutation(x, y, col[y]);
       }
     }
@@ -22,18 +30,18 @@ namespace GameBoard {
     int neighbor_count = 0;
 
     // Pad x and y so that residue is non-negative
-    const int x_start = x + width - 1;
+    const int x_start = x + this->width - 1;
     const int x_end = x_start + 2;
-    const int y_start = y + height - 1;
+    const int y_start = y + this->height - 1;
     const int y_end = y_start + 2;
 
     for (int _u = x_start; _u <= x_end; ++_u) {
       for (int _v = y_start; _v <= y_end; ++_v) {
         // Embed grid on a torus
-        const int u = _u % width;
-        const int v = _v % height;
+        const int u = _u % this->width;
+        const int v = _v % this->height;
 
-        if (u != v && this->state_of(u, v)) {
+        if (!(u == x && v == y) && this->state_of(u, v)) {
           neighbor_count++;
         }
       }
