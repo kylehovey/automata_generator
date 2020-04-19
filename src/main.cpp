@@ -34,6 +34,23 @@ int main() {
     if (alive && (neighbors == 3 || neighbors == 4 || sixseveneight)) return true;
     return false;
   };
+  const GameBoard::Rule thirtyFourLife = [](const int& neighbors, const bool& alive) {
+    const bool thirtyFour = neighbors == 3 || neighbors == 4;
+    if (thirtyFour) return true;
+    if (alive && thirtyFour) return true;
+    return false;
+  };
+  const GameBoard::Rule longLife = [](const int& neighbors, const bool& alive) {
+    if (neighbors == 5) return true;
+    if (alive && (neighbors == 3 || neighbors == 4 || neighbors == 5)) return true;
+    return false;
+  };
+  const GameBoard::Rule replicator = [](const int& neighbors, const bool& alive) {
+    const bool oneThreeFiveSeven = neighbors == 1 || neighbors == 3 || neighbors == 5 || neighbors == 7;
+    if (oneThreeFiveSeven) return true;
+    if (alive && oneThreeFiveSeven) return true;
+    return false;
+  };
 
   /**
    * Game board initialization
