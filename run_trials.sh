@@ -1,6 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-rm out.csv
+set -e # exit on failure
+
+[ ! -d "tmp/pbm" ] && mkdir -p "tmp/pbm"
+[ ! -d "tmp/png" ] && mkdir -p "tmp/png"
+
+[ -f "out.csv" ] && rm out.csv
 
 for trial in {1..10}
 do
