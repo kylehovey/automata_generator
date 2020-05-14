@@ -38,6 +38,7 @@ tmp/*
 
 # Output data
 out.csv
+*.gif
 
 # Compiled Program
 run
