@@ -13,9 +13,22 @@ int main() {
   const int width = 500;
   const int height = 500;
   const GameBoard::Rule anneal = [](const int& neighbors, const bool& alive) {
-    const bool sixseveneight = neighbors >= 6 && neighbors <= 8;
-    if (neighbors == 4 || sixseveneight) return true;
-    if (alive && (neighbors == 3 || neighbors == 5 || sixseveneight)) return true;
+    const bool sixseveneight = neighbors == 6 || neighbors == 7 || neighbors == 8;
+    if (alive) {
+      if (neighbors == 3 || neighbors == 5 || sixseveneight) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (neighbors == 4 || sixseveneight) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
     return false;
   };
   const GameBoard::Rule GoL = [](const int& neighbors, const bool& alive) {
@@ -74,7 +87,7 @@ int main() {
     ImageWriter::Descriptor descriptor(file_name, width, height);
     descriptor.write(mapper);
     descriptor.close();
-    board.step_with_rule(GoL);
+    board.step_with_rule(anneal);
   }
 
   return EXIT_SUCCESS;
