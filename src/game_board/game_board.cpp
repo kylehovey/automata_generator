@@ -9,6 +9,78 @@ namespace GameBoard {
     const int& height
   ) : width(width), height(height), board(Board(width, std::vector<Cell>(height))) { }
 
+  /**
+   * A rule number is a bit-map of birth and survival rules in a life-like CA
+   * rule definition. For instance, the Game of Life (B3/S23) would be:
+   * 0b000001100000001000 = 6152
+   *   ||||||||||||||||||
+   *   876543210876543210
+   *   ||||||||||||||||||
+   *   SSSSSSSSSBBBBBBBBB
+   */
+  Rule GameBoard::rule_for(const unsigned int& ruleNo) {
+    return [=](const int& neighbors, const bool& alive) {
+      if (alive) {
+        for (int bit = 9; bit < 18; ++bit) {
+          const unsigned int mask = 1 << bit;
+          const int neighborCount = bit - 9;
+          const bool cares = (mask & ruleNo) != 0;
+
+          if (cares && neighbors == neighborCount) {
+            return true;
+          }
+        }
+      } else {
+        for (int bit = 0; bit < 9; ++bit) {
+          const unsigned int mask = 1 << bit;
+          const int neighborCount = bit;
+          const bool cares = (mask & ruleNo) != 0;
+
+          if (cares && neighbors == neighborCount) {
+            return true;
+          }
+        }
+      }
+
+
+      return false;
+    };
+  }
+
+  std::string GameBoard::name_for(const Rule& rule) {
+    std::string out = "B";
+
+    for (int neighborCount = 0; neighborCount < 9; ++neighborCount) {
+      if (rule(neighborCount, false)) out += std::to_string(neighborCount);
+    }
+
+    out += "/S";
+
+    for (int neighborCount = 0; neighborCount < 9; ++neighborCount) {
+      if (rule(neighborCount, true)) out += std::to_string(neighborCount);
+    }
+
+    return out;
+  }
+
+  unsigned int GameBoard::number_for(const Rule& rule) {
+    unsigned int out = 0;
+
+    for (unsigned int bit = 0; bit < 9; ++bit) {
+      const int neighborCount = bit;
+
+      if (rule(neighborCount, false)) out += (1 << bit);
+    }
+
+    for (unsigned int bit = 9; bit < 18; ++bit) {
+      const int neighborCount = bit - 9;
+
+      if (rule(neighborCount, true)) out += (1 << bit);
+    }
+
+    return out;
+  }
+
   void GameBoard::step_with_rule(const Rule& rule) {
     this->mutate([&](const int& x, const int& y, Cell& cell) {
       cell.next = rule(this->neighbors_of(x, y), cell.current);

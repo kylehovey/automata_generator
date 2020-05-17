@@ -20,6 +20,10 @@ namespace GameBoard {
     public:
       GameBoard(const int&, const int&);
 
+      static Rule rule_for(const unsigned int&);
+      static std::string name_for(const Rule&);
+      static unsigned int number_for(const Rule&);
+
       void step_with_rule(const Rule&);
       void randomize(const int&);
       bool state_of(const int&, const int&) const;
