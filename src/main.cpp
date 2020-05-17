@@ -89,7 +89,7 @@ int main(const int argc, const char *argv[]) {
 
   for (int i = 0; i < 255; ++i) {
     std::cout << "Running iteration " << i << std::endl;
-    const std::string file_name = "tmp/pbm/" + std::to_string(i) + ".pbm";
+    const std::string file_name = "tmp/" + static_cast<std::string>(argv[2]) + "/pbm/" + std::to_string(i) + ".pbm";
     ImageWriter::Descriptor descriptor(file_name, width, height);
     descriptor.write(mapper);
     descriptor.close();
