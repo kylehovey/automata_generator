@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <time.h>
@@ -5,13 +6,15 @@
 #include "image_writer/image_writer.cpp"
 #include "game_board/game_board.cpp"
 
-int main() {
+int main(const int argc, const char *argv[]) {
+  (void) argc;
+
   /**
    * Settings
    */
   const std::string save_file = "tmp/output.pbm";
-  const int width = 500;
-  const int height = 500;
+  const int width = 100;
+  const int height = 100;
   const GameBoard::Rule anneal = [](const int& neighbors, const bool& alive) {
     const bool sixseveneight = neighbors == 6 || neighbors == 7 || neighbors == 8;
     if (alive) {
@@ -81,13 +84,16 @@ int main() {
   /**
    * Write the file to output
    */
+  const unsigned int ruleNo = atoi(argv[1]);
+  const GameBoard::Rule custom = GameBoard::GameBoard::rule_for(ruleNo);
+
   for (int i = 0; i < 255; ++i) {
     std::cout << "Running iteration " << i << std::endl;
     const std::string file_name = "tmp/pbm/" + std::to_string(i) + ".pbm";
     ImageWriter::Descriptor descriptor(file_name, width, height);
     descriptor.write(mapper);
     descriptor.close();
-    board.step_with_rule(anneal);
+    board.step_with_rule(custom);
   }
 
   return EXIT_SUCCESS;
